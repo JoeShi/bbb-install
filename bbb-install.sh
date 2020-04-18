@@ -451,12 +451,6 @@ need_ppa() {
   if [ ! -f /etc/apt/sources.list.d/$1 ]; then
     LC_CTYPE=C.UTF-8 add-apt-repository -y $2 
   fi
-  if ! apt-key list $3 | grep -q -E "1024|4096"; then  # Let's try it a second time
-    LC_CTYPE=C.UTF-8 add-apt-repository $2 -y
-    if ! apt-key list $3 | grep -q -E "1024|4096"; then
-      err "Unable to setup PPA for $2"
-    fi
-  fi
 }
 
 check_version() {
