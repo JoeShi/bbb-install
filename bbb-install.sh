@@ -418,17 +418,21 @@ get_IP() {
       systemctl stop nginx
     fi
 
-    need_pkg netcat-openbsd
-    nc -l -p 443 > /dev/null 2>&1 &
-    nc_PID=$!
+    # To Avoid Issue: https://github.com/aws-samples/big-blue-button-on-aws-cn/issues/1
+    INTERNAL_IP=$IP
+    IP=$external_ip
+
+#    need_pkg netcat-openbsd
+#    nc -l -p 443 > /dev/null 2>&1 &
+#    nc_PID=$!
     
      # Check if we can reach the server through it's external IP address
-     if nc -zvw3 $external_ip 443  > /dev/null 2>&1; then
-       INTERNAL_IP=$IP
-       IP=$external_ip
-     fi
+#     if nc -zvw3 $external_ip 443  > /dev/null 2>&1; then
+#       INTERNAL_IP=$IP
+#       IP=$external_ip
+#     fi
 
-    kill $nc_PID  > /dev/null 2>&1;
+#    kill $nc_PID  > /dev/null 2>&1;
 
     if which nginx; then
       systemctl start nginx
